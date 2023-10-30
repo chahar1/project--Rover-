@@ -1,0 +1,55 @@
+// Motor A control
+int enA = 9; // Enable pin for Motor A
+int in1 = 8; // Input 1 pin for Motor A
+int in2 = 7; // Input 2 pin for Motor A
+
+// Motor B control
+int enB = 6; // Enable pin for Motor B
+int in3 = 5; // Input 1 pin for Motor B
+int in4 = 4; // Input 2 pin for Motor B
+
+// Ultrasonic sensor pins
+const int trigPin = 11;  // Trigger pin
+const int echoPin = 10;  // Echo pin
+
+// Camera module pins
+const int vsyncPin = 2;  // VSYNC pin for OV7670
+const int hrefPin = 3;   // HREF pin for OV7670
+const int pclkPin = 4;   // PCLK pin for OV7670
+// Additional camera configuration can be complex and would require dedicated libraries.
+
+void setup() {
+  // Set the motor control pins as outputs
+  pinMode(enA, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+
+  // Set ultrasonic sensor pins
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+  // Set camera module pins
+  pinMode(vsyncPin, INPUT);
+  pinMode(hrefPin, INPUT);
+  pinMode(pclkPin, INPUT);
+
+  // Initialize serial communication
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Motor Control Code
+  // (You can control the motors here as needed)
+
+  // Ultrasonic Sensor Measurement
+  // (You can measure the distance here and take action based on the distance)
+
+  // Camera Module Control
+  // (Controlling the camera module and capturing images is a complex task and requires dedicated libraries. It's beyond the scope of a simple code example.)
+
+  // Delay for 2 seconds
+  delay(2000);
+}
