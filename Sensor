@@ -8,6 +8,10 @@ int enB = 6; // Enable pin for Motor B
 int in3 = 5; // Input 1 pin for Motor B
 int in4 = 4; // Input 2 pin for Motor B
 
+// Ultrasonic sensor pins
+const int trigPin = 11;  // Trigger pin
+const int echoPin = 10;  // Echo pin
+
 void setup() {
   // Set the motor control pins as outputs
   pinMode(enA, OUTPUT);
@@ -17,17 +21,20 @@ void setup() {
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
 
-  // Initialize the serial communication at 9600 baud
+  // Set ultrasonic sensor pins
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+  // Initialize serial communication
   Serial.begin(9600);
 }
 
 void loop() {
-  // Move Motor A forward
+  // Move both motors forward
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
   analogWrite(enA, 255); // Motor A at full speed
 
-  // Move Motor B forward
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
   analogWrite(enB, 255); // Motor B at full speed
@@ -38,23 +45,30 @@ void loop() {
   analogWrite(enA, 0); // Motor A stopped
   analogWrite(enB, 0); // Motor B stopped
 
-  delay(1000); // Delay for 1 second (optional)
+  // Ultrasonic sensor measurement
+  long duration, distance;
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration / 2) / 29.1; // Calculate distance in centimeters
+  
+  // Display the distance on the serial monitor
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
 
-  // Move Motor A backward
-  digitalWrite(in1, LOW);
-  digitalWrite(in2, HIGH);
-  analogWrite(enA, 255); // Motor A at full speed
+  if (distance < 5) {
+    // If the distance is less than 5 cm, stop and reverse the motors
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+    delay(2000); // Reverse both motors for 2 seconds
+  }
 
-  // Move Motor B backward
-  digitalWrite(in3, LOW);
-  digitalWrite(in4, HIGH);
-  analogWrite(enB, 255); // Motor B at full speed
-
-  delay(2000); // Run both motors backward for 2 seconds
-
-  // Stop both motors
-  analogWrite(enA, 0); // Motor A stopped
-  analogWrite(enB, 0); // Motor B stopped
-
-  delay(1000); // Delay for 1 second (optional)
+  // Wait for 2 seconds before the next cycle
+  delay(2000);
 }
