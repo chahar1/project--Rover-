@@ -1,0 +1,60 @@
+// Motor A control
+int enA = 9; // Enable pin for Motor A
+int in1 = 8; // Input 1 pin for Motor A
+int in2 = 7; // Input 2 pin for Motor A
+
+// Motor B control
+int enB = 6; // Enable pin for Motor B
+int in3 = 5; // Input 1 pin for Motor B
+int in4 = 4; // Input 2 pin for Motor B
+
+void setup() {
+  // Set the motor control pins as outputs
+  pinMode(enA, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+
+  // Initialize the serial communication at 9600 baud
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Move Motor A forward
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  analogWrite(enA, 255); // Motor A at full speed
+
+  // Move Motor B forward
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  analogWrite(enB, 255); // Motor B at full speed
+
+  delay(2000); // Run both motors forward for 2 seconds
+
+  // Stop both motors
+  analogWrite(enA, 0); // Motor A stopped
+  analogWrite(enB, 0); // Motor B stopped
+
+  delay(1000); // Delay for 1 second (optional)
+
+  // Move Motor A backward
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  analogWrite(enA, 255); // Motor A at full speed
+
+  // Move Motor B backward
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+  analogWrite(enB, 255); // Motor B at full speed
+
+  delay(2000); // Run both motors backward for 2 seconds
+
+  // Stop both motors
+  analogWrite(enA, 0); // Motor A stopped
+  analogWrite(enB, 0); // Motor B stopped
+
+  delay(1000); // Delay for 1 second (optional)
+}
